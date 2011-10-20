@@ -27,8 +27,9 @@
   <link rel="stylesheet" type="text/css" href="/plugin/html5-notifier-plugin/css/html5-notifier.css" />
   <script type="text/javascript">
     var urlName = '/html5-notifier-plugin';
-    var notificationTimeout = 10000;
-    var queryTimeout = 5;
+    var enabled = ${it.enabled}
+    var queryTimeout = ${it.queryTimeout};
+    var notificationTimeout = ${it.notificationTimeout};
   </script>
   <!-- we require advanced features found in prototype-1.7 -->
   <script type="text/javascript" src="/plugin/html5-notifier-plugin/js/prototype-1.7.js" />
