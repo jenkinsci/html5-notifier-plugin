@@ -32,34 +32,39 @@ function isNotificationsPermitted() {
 }
 
 function setup() {
-	if (isNotificationsEnabled()) {
-		window.webkitNotifications.requestPermission();
-	} else {
-		console.log("Notifications are not supported for this web browser.");
+	if (enabled) {
+		if (isNotificationsEnabled()) {
+			window.webkitNotifications.requestPermission();
+		} else {
+			console
+					.log("Notifications are not supported for this web browser.");
+		}
 	}
 }
 
 function run() {
-	new PeriodicalExecuter(function(pe) {
-		if (isNotificationsPermitted()) {
-			new Ajax.Request(urlName + '/list', {
-				onSuccess : function(response) {
-					$H(response.responseJSON).get('new').each(
-							function(item) {
-								notification = window.webkitNotifications
-										.createHTMLNotification($H(item).get(
-												'url'));
-								notification.ondisplay = new function() {
-									window.setTimeout(function() {
-										notification.cancel();
-									}, notificationTimeout);
-								}
-								notification.show();
-							});
-				}
-			});
-		}
-	}, queryTimeout);
+	if (enabled) {
+		new PeriodicalExecuter(function(pe) {
+			if (isNotificationsPermitted()) {
+				new Ajax.Request(urlName + '/list', {
+					onSuccess : function(response) {
+						$H(response.responseJSON).get('new').each(
+								function(item) {
+									notification = window.webkitNotifications
+											.createHTMLNotification($H(item)
+													.get('url'));
+									notification.ondisplay = new function() {
+										window.setTimeout(function() {
+											notification.cancel();
+										}, notificationTimeout);
+									}
+									notification.show();
+								});
+					}
+				});
+			}
+		}, queryTimeout);
+	}
 }
 
 setup();
