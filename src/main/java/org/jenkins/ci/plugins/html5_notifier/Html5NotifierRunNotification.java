@@ -24,6 +24,7 @@
 
 package org.jenkins.ci.plugins.html5_notifier;
 
+import hudson.model.HealthReport;
 import hudson.model.Result;
 import hudson.model.Run;
 import hudson.model.listeners.RunListener;
@@ -37,18 +38,7 @@ import jenkins.model.Jenkins;
  */
 public final class Html5NotifierRunNotification extends RunListener<Run<?, ?>>
         implements Comparable<Html5NotifierRunNotification> {
-    private static int IDX = 1;
-
-    protected static String toImgHtmlString(final Result result) {
-        if (result == null) {
-            return "";
-        }
-
-        return new StringBuilder().append("<img alt=\"")
-                .append(result.toString()).append("\"").append(" src=\"")
-                .append("/images/16x16/").append(result.color.getImage())
-                .append("\"/>").toString();
-    }
+    private static int      IDX = 1;
 
     private final Date      date;
 
@@ -102,14 +92,57 @@ public final class Html5NotifierRunNotification extends RunListener<Run<?, ?>>
         return date.hashCode() * run.hashCode();
     }
 
+    /*
+     * I wish there was a better way to do this... like, internal jelly
+     * interpolator
+     */
     public String toHtmlString() {
-        return new StringBuilder().append("<div>")
+        final String rootUrl = Jenkins.getInstance().getRootUrl();
+        final Result result = run.getResult();
+        final HealthReport buildHealth = run.getParent().getBuildHealth();
+
+        return new StringBuilder()
+                .append("<html>")
+                .append("<head>")
+                .append("<link rel=\"stylesheet\" type=\"text/css\" href=\"")
+                .append(rootUrl)
+                .append("/plugin/html5-notifier-plugin/css/html5-notifier.css\" />")
+                .append("</head>")
+                .append("<body>")
+                .append("<div class=\"notification\">")
+
+                // the entire "page" is a link to the build result page
                 .append("<a target=\"_blank\" href=\"")
-                .append(Jenkins.getInstance().getRootUrl())
-                .append(run.getUrl()).append("\">")
-                .append(toImgHtmlString(run.getResult()))
-                .append(run.getResult()).append(" -- ")
-                .append(run.getFullDisplayName()).append("</a>")
-                .append("</div>").toString();
+                .append(rootUrl)
+                .append(run.getUrl())
+                .append("\">")
+
+                // build result ball
+                .append("<img alt=\"")
+                .append(result.toString())
+                .append("\" title=\"")
+                .append(result.toString())
+                .append("\" src=\"")
+                // TODO: use user's size prefernce
+                .append("/images/16x16/")
+                .append(result.color.getImage())
+                .append("\"/>")
+
+                // build health
+                .append(" ").append("<img alt=\"")
+                .append(buildHealth.getDescription()).append("\" title=\"")
+                .append(buildHealth.getDescription()).append("\" src=\"")
+                .append(rootUrl).append("/images/16x16/")
+                .append(buildHealth.getIconUrl()).append("\"/>")
+
+                // job name # build number
+                .append(" ").append(run.getFullDisplayName())
+
+                // result status
+                .append(" - ").append(run.getResult())
+
+                // all done
+                .append("</a>").append("</div>").append("</body>")
+                .append("</html>").toString();
     }
 }

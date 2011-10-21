@@ -25,7 +25,6 @@
 <?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core">
   <j:set var="pluginUrl" value="${request.contextPath}/plugin/html5-notifier-plugin"/>
-  <link rel="stylesheet" type="text/css" href="${pluginUrl}/css/html5-notifier.css" />
   <script type="text/javascript">
     var enabled = ${it.enabled}
     var queryTimeout = ${it.queryTimeout};

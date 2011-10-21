@@ -1,0 +1,25 @@
+.notification {
+	margin: 0em;
+	padding: 0em;
+	font-size: small;
+}
+
+.notification a:active {
+	text-decoration: underline;
+}
+
+.notification a:hover {
+	text-decoration: underline;
+}
+
+.notification a:link {
+	text-decoration: none;
+}
+
+.notification a:visited {
+	text-decoration: none;
+}
+
+.notification img {
+	border: 0px;
+}
