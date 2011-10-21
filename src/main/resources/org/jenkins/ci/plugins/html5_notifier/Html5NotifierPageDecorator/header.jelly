@@ -24,14 +24,14 @@
 
 <?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core">
-  <link rel="stylesheet" type="text/css" href="/plugin/html5-notifier-plugin/css/html5-notifier.css" />
+  <j:set var="pluginUrl" value="${request.contextPath}/plugin/html5-notifier-plugin"/>
+  <link rel="stylesheet" type="text/css" href="${pluginUrl}/css/html5-notifier.css" />
   <script type="text/javascript">
-    var urlName = '/html5-notifier-plugin';
     var enabled = ${it.enabled}
     var queryTimeout = ${it.queryTimeout};
     var notificationTimeout = ${it.notificationTimeout};
   </script>
   <!-- we require advanced features found in prototype-1.7 -->
-  <script type="text/javascript" src="/plugin/html5-notifier-plugin/js/prototype-1.7.js" />
-  <script type="text/javascript" src="/plugin/html5-notifier-plugin/js/html5-notifier.js" />
+  <script type="text/javascript" src="${pluginUrl}/js/prototype-1.7.js" />
+  <script type="text/javascript" src="${pluginUrl}/js/html5-notifier.js" />
 </j:jelly>
