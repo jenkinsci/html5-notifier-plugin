@@ -50,7 +50,7 @@ function run() {
 					onSuccess : function(response) {
 						$H(response.responseJSON).get('new').each(
 								function(item) {
-									notification = window.webkitNotifications
+									var notification = window.webkitNotifications
 											.createHTMLNotification($H(item)
 													.get('url'));
 									notification.ondisplay = new function() {
