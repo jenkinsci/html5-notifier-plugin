@@ -26,6 +26,7 @@ package org.jenkins.ci.plugins.html5_notifier;
 
 import hudson.Extension;
 import hudson.model.PageDecorator;
+import jenkins.model.GlobalConfiguration;
 import net.sf.json.JSONObject;
 
 import org.kohsuke.stapler.DataBoundConstructor;
@@ -35,7 +36,7 @@ import org.kohsuke.stapler.StaplerRequest;
  * @author <a href="mailto:jieryn@gmail.com">Jesse Farinacci</a>
  */
 @Extension
-public final class Html5NotifierPageDecorator extends PageDecorator {
+public final class GlobalConfigurationImpl extends GlobalConfiguration{
     /**
      * The default value for {@link #enabled}.
      */
@@ -69,7 +70,7 @@ public final class Html5NotifierPageDecorator extends PageDecorator {
     /**
      * Create a default HTML5 web notification {@link PageDecorator}.
      */
-    public Html5NotifierPageDecorator() {
+    public GlobalConfigurationImpl() {
         this(DEFAULT_ENABLED, DEFAULT_QUERY_TIMEOUT,
                 DEFAULT_NOTIFICATION_TIMEOUT);
     }
@@ -79,7 +80,7 @@ public final class Html5NotifierPageDecorator extends PageDecorator {
      * configuration.
      */
     @DataBoundConstructor
-    public Html5NotifierPageDecorator(final boolean enabled,
+    public GlobalConfigurationImpl(final boolean enabled,
             final int queryTimeout, final int notificationTimeout) {
         super();
         load();

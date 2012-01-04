@@ -36,8 +36,8 @@ import jenkins.model.Jenkins;
 /**
  * @author <a href="mailto:jieryn@gmail.com">Jesse Farinacci</a>
  */
-public final class Html5NotifierRunNotification extends RunListener<Run<?, ?>>
-        implements Comparable<Html5NotifierRunNotification> {
+public final class RunNotification extends RunListener<Run<?, ?>> implements
+        Comparable<RunNotification> {
     private static int      IDX = 1;
 
     private final Date      date;
@@ -48,7 +48,7 @@ public final class Html5NotifierRunNotification extends RunListener<Run<?, ?>>
 
     private final boolean   differentResult;
 
-    public Html5NotifierRunNotification(final Run<?, ?> run) {
+    public RunNotification(final Run<?, ?> run) {
         super();
         date = new Date();
         this.run = run;
@@ -56,7 +56,7 @@ public final class Html5NotifierRunNotification extends RunListener<Run<?, ?>>
         idx = IDX++;
     }
 
-    public int compareTo(final Html5NotifierRunNotification other) {
+    public int compareTo(final RunNotification other) {
         if (this == other) {
             return 0;
         }
@@ -70,11 +70,11 @@ public final class Html5NotifierRunNotification extends RunListener<Run<?, ?>>
             return true;
         }
 
-        if (!(obj instanceof Html5NotifierRunNotification)) {
+        if (!(obj instanceof RunNotification)) {
             return false;
         }
 
-        final Html5NotifierRunNotification other = (Html5NotifierRunNotification) obj;
+        final RunNotification other = (RunNotification) obj;
         return date.equals(other.getDate()) && run.equals(other.getRun());
     }
 

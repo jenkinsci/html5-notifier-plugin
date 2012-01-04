@@ -46,7 +46,7 @@ import org.kohsuke.stapler.StaplerResponse;
  * @author <a href="mailto:jieryn@gmail.com">Jesse Farinacci</a>
  */
 @Extension
-public final class Html5NotifierRootAction implements RootAction {
+public final class RootActionImpl implements RootAction {
     protected static final String ATTRIBUTE_RUN_ID   = "run";
 
     protected static final String SESSION_LAST_QUERY = "lastQuery";
@@ -74,7 +74,7 @@ public final class Html5NotifierRootAction implements RootAction {
             final Date date) {
         final JSONArray array = new JSONArray();
 
-        for (final Html5NotifierRunNotification notification : Html5NotifierRunListener
+        for (final RunNotification notification : RunListenerImpl
                 .getAllFutureHtml5NotifierRunNotifications(date)) {
             array.add(toJSONObject(notification));
         }
@@ -82,8 +82,7 @@ public final class Html5NotifierRootAction implements RootAction {
         return array;
     }
 
-    protected static JSONObject toJSONObject(
-            final Html5NotifierRunNotification notification) {
+    protected static JSONObject toJSONObject(final RunNotification notification) {
         final JSONObject jsonObject = new JSONObject();
         jsonObject.put("url", URL_NAME + "/query?" + ATTRIBUTE_RUN_ID + "="
                 + notification.getIdx());
@@ -108,8 +107,8 @@ public final class Html5NotifierRootAction implements RootAction {
     }
 
     protected static void writeResponse(final StaplerResponse response,
-            final Html5NotifierRunNotification notification)
-            throws ServletException, IOException {
+            final RunNotification notification) throws ServletException,
+            IOException {
         if (notification != null) {
             writeResponse(response, notification.toHtmlString());
         }
@@ -153,7 +152,7 @@ public final class Html5NotifierRootAction implements RootAction {
         if (!StringUtils.isEmpty(run)) {
             try {
                 writeResponse(response,
-                        Html5NotifierRunListener
+                        RunListenerImpl
                                 .getHtml5NotifierRunNotificationByIdx(Integer
                                         .valueOf(run)));
             }
@@ -164,16 +163,19 @@ public final class Html5NotifierRootAction implements RootAction {
         }
     }
 
+    @Override
     public String getDisplayName() {
         /* intentionally null */
         return null;
     }
 
+    @Override
     public String getIconFileName() {
         /* intentionally null */
         return null;
     }
 
+    @Override
     public String getUrlName() {
         return URL_NAME;
     }

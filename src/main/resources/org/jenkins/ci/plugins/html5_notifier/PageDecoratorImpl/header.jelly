@@ -26,9 +26,9 @@
 <j:jelly xmlns:j="jelly:core">
   <j:set var="pluginUrl" value="${request.contextPath}/plugin/html5-notifier-plugin"/>
   <script type="text/javascript">
-    var enabled = ${it.enabled}
-    var queryTimeout = ${it.queryTimeout};
-    var notificationTimeout = ${it.notificationTimeout};
+    var enabled = ${it.globalConfiguration.enabled}
+    var queryTimeout = ${it.globalConfiguration.queryTimeout};
+    var notificationTimeout = ${it.globalConfiguration.notificationTimeout};
   </script>
   <!-- we require advanced features found in prototype-1.7 -->
   <script type="text/javascript" src="${pluginUrl}/js/prototype-1.7.js" />

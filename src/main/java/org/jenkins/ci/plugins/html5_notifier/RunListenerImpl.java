@@ -35,6 +35,8 @@ import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+import javax.inject.Inject;
+
 /**
  * Conveniently keep track of all {@link Run}s as they complete, as
  * {@link Html5NotifierRunNotification}s, and provide time-based access to them.
@@ -42,20 +44,20 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  * @author <a href="mailto:jieryn@gmail.com">Jesse Farinacci</a>
  */
 @Extension
-public final class Html5NotifierRunListener extends RunListener<Run<?, ?>> {
+public final class RunListenerImpl extends RunListener<Run<?, ?>> {
     /**
      * The maximum number of entries in the {@link Queue}. When we move to Java
      * 6 there are some better options than this.. ugh.
      */
-    private static final int                                 MAX_QUEUE_SIZE = 2048;
+    private static final int                    MAX_QUEUE_SIZE = 2048;
 
     /**
      * The {@link Queue} of completed {@link Run}s, as
      * {@link Html5NotifierRunNotification}s.
      */
-    private static final Queue<Html5NotifierRunNotification> queue          = new ConcurrentLinkedQueue<Html5NotifierRunNotification>();
+    private static final Queue<RunNotification> queue          = new ConcurrentLinkedQueue<RunNotification>();
 
-    protected static void add(final Html5NotifierRunNotification run) {
+    protected static void add(final RunNotification run) {
         if (run != null) {
             queue.add(run);
         }
@@ -63,7 +65,7 @@ public final class Html5NotifierRunListener extends RunListener<Run<?, ?>> {
 
     protected static void add(final Run<?, ?> run) {
         if (run != null) {
-            add(new Html5NotifierRunNotification(run));
+            add(new RunNotification(run));
         }
     }
 
@@ -73,12 +75,12 @@ public final class Html5NotifierRunListener extends RunListener<Run<?, ?>> {
         }
     }
 
-    public static List<Html5NotifierRunNotification> getAllFutureHtml5NotifierRunNotifications(
+    public static List<RunNotification> getAllFutureHtml5NotifierRunNotifications(
             final Date date) {
-        final List<Html5NotifierRunNotification> notifications = new LinkedList<Html5NotifierRunNotification>();
+        final List<RunNotification> notifications = new LinkedList<RunNotification>();
 
         if (date != null) {
-            for (final Html5NotifierRunNotification notification : queue) {
+            for (final RunNotification notification : queue) {
                 if (date.before(notification.getDate())) {
                     notifications.add(notification);
                 }
@@ -88,9 +90,9 @@ public final class Html5NotifierRunListener extends RunListener<Run<?, ?>> {
         return notifications;
     }
 
-    public static Html5NotifierRunNotification getHtml5NotifierRunNotificationByIdx(
+    public static RunNotification getHtml5NotifierRunNotificationByIdx(
             final int idx) {
-        for (final Html5NotifierRunNotification notification : queue) {
+        for (final RunNotification notification : queue) {
             if (idx == notification.getIdx()) {
                 return notification;
             }
@@ -99,9 +101,16 @@ public final class Html5NotifierRunListener extends RunListener<Run<?, ?>> {
         return null;
     }
 
+    @Inject
+    private GlobalConfigurationImpl globalConfiguration;
+
+    public GlobalConfigurationImpl getGlobalConfiguration() {
+        return globalConfiguration;
+    }
+
     @Override
     public void onCompleted(final Run<?, ?> run, final TaskListener listener) {
-            add(run);
+        add(run);
         clean();
     }
 }
