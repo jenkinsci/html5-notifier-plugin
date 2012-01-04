@@ -52,22 +52,9 @@ public final class RunListenerImpl extends RunListener<Run<?, ?>> {
     private static final int                    MAX_QUEUE_SIZE = 2048;
 
     /**
-     * The {@link Queue} of completed {@link Run}s, as
-     * {@link Html5NotifierRunNotification}s.
+     * The {@link Queue} of completed {@link Run}s, as {@link RunNotification}s.
      */
     private static final Queue<RunNotification> queue          = new ConcurrentLinkedQueue<RunNotification>();
-
-    protected static void add(final RunNotification run) {
-        if (run != null) {
-            queue.add(run);
-        }
-    }
-
-    protected static void add(final Run<?, ?> run) {
-        if (run != null) {
-            add(new RunNotification(run));
-        }
-    }
 
     protected static void clean() {
         while (queue.size() > MAX_QUEUE_SIZE) {
@@ -75,7 +62,7 @@ public final class RunListenerImpl extends RunListener<Run<?, ?>> {
         }
     }
 
-    public static List<RunNotification> getAllFutureHtml5NotifierRunNotifications(
+    public static List<RunNotification> getAllFutureRunNotifications(
             final Date date) {
         final List<RunNotification> notifications = new LinkedList<RunNotification>();
 
@@ -90,8 +77,7 @@ public final class RunListenerImpl extends RunListener<Run<?, ?>> {
         return notifications;
     }
 
-    public static RunNotification getHtml5NotifierRunNotificationByIdx(
-            final int idx) {
+    public static RunNotification getRunNotificationByIdx(final int idx) {
         for (final RunNotification notification : queue) {
             if (idx == notification.getIdx()) {
                 return notification;
@@ -103,6 +89,24 @@ public final class RunListenerImpl extends RunListener<Run<?, ?>> {
 
     @Inject
     private GlobalConfigurationImpl globalConfiguration;
+
+    protected void add(final Run<?, ?> run) {
+        if (run != null) {
+            add(new RunNotification(run));
+        }
+    }
+
+    protected void add(final RunNotification run) {
+        if (run != null) {
+            if (run.isDifferentResult()) {
+                queue.add(run);
+            }
+
+            else if (globalConfiguration.isAllResults()) {
+                queue.add(run);
+            }
+        }
+    }
 
     public GlobalConfigurationImpl getGlobalConfiguration() {
         return globalConfiguration;

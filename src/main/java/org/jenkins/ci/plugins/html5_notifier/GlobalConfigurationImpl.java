@@ -36,7 +36,7 @@ import org.kohsuke.stapler.StaplerRequest;
  * @author <a href="mailto:jieryn@gmail.com">Jesse Farinacci</a>
  */
 @Extension
-public final class GlobalConfigurationImpl extends GlobalConfiguration{
+public final class GlobalConfigurationImpl extends GlobalConfiguration {
     /**
      * The default value for {@link #enabled}.
      */
@@ -51,6 +51,11 @@ public final class GlobalConfigurationImpl extends GlobalConfiguration{
      * The default value for {@link #notificationTimeout}, in milliseconds.
      */
     protected static final int     DEFAULT_NOTIFICATION_TIMEOUT = 15000;
+
+    /**
+     * The default value for {@link #allResults}.
+     */
+    protected static final boolean DEFAULT_ALL_RESULTS          = true;
 
     /**
      * Whether or not to allow HTML5 notifications.
@@ -68,11 +73,26 @@ public final class GlobalConfigurationImpl extends GlobalConfiguration{
     private int                    notificationTimeout;
 
     /**
+     * Whether or not to show notifications for all build results (enabled) or
+     * only build results which have changed the status quo (disabled).
+     */
+    private boolean                allResults;
+
+    /**
      * Create a default HTML5 web notification {@link PageDecorator}.
      */
     public GlobalConfigurationImpl() {
         this(DEFAULT_ENABLED, DEFAULT_QUERY_TIMEOUT,
-                DEFAULT_NOTIFICATION_TIMEOUT);
+                DEFAULT_NOTIFICATION_TIMEOUT, DEFAULT_ALL_RESULTS);
+    }
+
+    /**
+     * @since 1.1
+     */
+    @Deprecated
+    public GlobalConfigurationImpl(final boolean enabled,
+            final int queryTimeout, final int notificationTimeout) {
+        this(enabled, queryTimeout, notificationTimeout, DEFAULT_ALL_RESULTS);
     }
 
     /**
@@ -81,12 +101,14 @@ public final class GlobalConfigurationImpl extends GlobalConfiguration{
      */
     @DataBoundConstructor
     public GlobalConfigurationImpl(final boolean enabled,
-            final int queryTimeout, final int notificationTimeout) {
+            final int queryTimeout, final int notificationTimeout,
+            final boolean allResults) {
         super();
         load();
         this.enabled = enabled;
         this.queryTimeout = queryTimeout;
         this.notificationTimeout = notificationTimeout;
+        this.allResults = allResults;
     }
 
     @Override
@@ -124,5 +146,13 @@ public final class GlobalConfigurationImpl extends GlobalConfiguration{
 
     public void setNotificationTimeout(final int notificationTimeout) {
         this.notificationTimeout = notificationTimeout;
+    }
+
+    public boolean isAllResults() {
+        return allResults;
+    }
+
+    public void setAllResults(final boolean allResults) {
+        this.allResults = allResults;
     }
 }

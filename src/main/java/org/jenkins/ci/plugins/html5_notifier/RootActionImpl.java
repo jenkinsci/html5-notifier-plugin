@@ -75,7 +75,7 @@ public final class RootActionImpl implements RootAction {
         final JSONArray array = new JSONArray();
 
         for (final RunNotification notification : RunListenerImpl
-                .getAllFutureHtml5NotifierRunNotifications(date)) {
+                .getAllFutureRunNotifications(date)) {
             array.add(toJSONObject(notification));
         }
 
@@ -152,9 +152,8 @@ public final class RootActionImpl implements RootAction {
         if (!StringUtils.isEmpty(run)) {
             try {
                 writeResponse(response,
-                        RunListenerImpl
-                                .getHtml5NotifierRunNotificationByIdx(Integer
-                                        .valueOf(run)));
+                        RunListenerImpl.getRunNotificationByIdx(Integer
+                                .valueOf(run)));
             }
 
             catch (final NumberFormatException nfe) {
