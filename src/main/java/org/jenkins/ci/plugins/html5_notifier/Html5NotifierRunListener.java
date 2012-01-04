@@ -101,10 +101,7 @@ public final class Html5NotifierRunListener extends RunListener<Run<?, ?>> {
 
     @Override
     public void onCompleted(final Run<?, ?> run, final TaskListener listener) {
-        if (run != null) {
             add(run);
-        }
-
         clean();
     }
 }

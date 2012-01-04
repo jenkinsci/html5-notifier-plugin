@@ -46,10 +46,13 @@ public final class Html5NotifierRunNotification extends RunListener<Run<?, ?>>
 
     private final Run<?, ?> run;
 
+    private final boolean   differentResult;
+
     public Html5NotifierRunNotification(final Run<?, ?> run) {
         super();
         date = new Date();
         this.run = run;
+        differentResult = RunResultUtils.isDifferentResult(run);
         idx = IDX++;
     }
 
@@ -90,6 +93,10 @@ public final class Html5NotifierRunNotification extends RunListener<Run<?, ?>>
     @Override
     public int hashCode() {
         return date.hashCode() * run.hashCode();
+    }
+
+    public boolean isDifferentResult() {
+        return differentResult;
     }
 
     /*
