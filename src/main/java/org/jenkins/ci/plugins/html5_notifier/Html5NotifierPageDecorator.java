@@ -81,7 +81,7 @@ public final class Html5NotifierPageDecorator extends PageDecorator {
     @DataBoundConstructor
     public Html5NotifierPageDecorator(final boolean enabled,
             final int queryTimeout, final int notificationTimeout) {
-        super(Html5NotifierPageDecorator.class);
+        super();
         load();
         this.enabled = enabled;
         this.queryTimeout = queryTimeout;
