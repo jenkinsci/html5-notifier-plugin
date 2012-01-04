@@ -47,13 +47,31 @@ public final class Html5NotifierRunListener extends RunListener<Run<?, ?>> {
      * The maximum number of entries in the {@link Queue}. When we move to Java
      * 6 there are some better options than this.. ugh.
      */
-    private static final int                                 MAX_QUEUE_SIZE = 1024;
+    private static final int                                 MAX_QUEUE_SIZE = 2048;
 
     /**
      * The {@link Queue} of completed {@link Run}s, as
      * {@link Html5NotifierRunNotification}s.
      */
     private static final Queue<Html5NotifierRunNotification> queue          = new ConcurrentLinkedQueue<Html5NotifierRunNotification>();
+
+    protected static void add(final Html5NotifierRunNotification run) {
+        if (run != null) {
+            queue.add(run);
+        }
+    }
+
+    protected static void add(final Run<?, ?> run) {
+        if (run != null) {
+            add(new Html5NotifierRunNotification(run));
+        }
+    }
+
+    protected static void clean() {
+        while (queue.size() > MAX_QUEUE_SIZE) {
+            queue.remove();
+        }
+    }
 
     public static List<Html5NotifierRunNotification> getAllFutureHtml5NotifierRunNotifications(
             final Date date) {
@@ -83,10 +101,10 @@ public final class Html5NotifierRunListener extends RunListener<Run<?, ?>> {
 
     @Override
     public void onCompleted(final Run<?, ?> run, final TaskListener listener) {
-        queue.add(new Html5NotifierRunNotification(run));
-
-        while (queue.size() > MAX_QUEUE_SIZE) {
-            queue.remove();
+        if (run != null) {
+            add(run);
         }
+
+        clean();
     }
 }
