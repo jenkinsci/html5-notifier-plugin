@@ -26,6 +26,7 @@ package org.jenkins.ci.plugins.html5_notifier;
 
 import hudson.Extension;
 import hudson.model.TaskListener;
+import hudson.model.Job;
 import hudson.model.Run;
 import hudson.model.listeners.RunListener;
 
@@ -92,17 +93,24 @@ public final class RunListenerImpl extends RunListener<Run<?, ?>> {
 
     protected void add(final Run<?, ?> run) {
         if (run != null) {
-            add(new RunNotification(run));
+            final Job<?, ?> parent = run.getParent();
+            if (parent != null) {
+                final JobPropertyImpl property = parent
+                        .getProperty(JobPropertyImpl.class);
+                if (property == null || !property.isSkip()) {
+                    add(new RunNotification(run));
+                }
+            }
         }
     }
 
     protected void add(final RunNotification run) {
         if (run != null) {
-            if (run.isDifferentResult()) {
+            if (globalConfiguration.isAllResults()) {
                 queue.add(run);
             }
 
-            else if (globalConfiguration.isAllResults()) {
+            else if (run.isDifferentResult()) {
                 queue.add(run);
             }
         }

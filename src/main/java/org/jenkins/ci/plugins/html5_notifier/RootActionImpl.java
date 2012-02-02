@@ -162,19 +162,16 @@ public final class RootActionImpl implements RootAction {
         }
     }
 
-    @Override
     public String getDisplayName() {
         /* intentionally null */
         return null;
     }
 
-    @Override
     public String getIconFileName() {
         /* intentionally null */
         return null;
     }
 
-    @Override
     public String getUrlName() {
         return URL_NAME;
     }
