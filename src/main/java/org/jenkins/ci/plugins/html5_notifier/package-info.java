@@ -22,25 +22,14 @@
  * THE SOFTWARE.
  */
 
-package org.jenkins.ci.plugins.html5_notifier;
-
-import hudson.Extension;
-import hudson.model.PageDecorator;
-
-import javax.inject.Inject;
-
 /**
- * A simple {@hudson.model.PageDecorator} which
- * inserts the appropriate javascript code onto each page.
+ * The <a
+ * href="http://wiki.jenkins-ci.org/display/JENKINS/HTML5+Notifier+Plugin">HTML5
+ * Notifier Plugin</a> provides <a href=
+ * "http://dev.w3.org/2006/webapi/WebNotifications/publish/Notifications.html"
+ * >W3C Web Notifications</a> support for builds.
  * 
  * @author <a href="mailto:jieryn@gmail.com">Jesse Farinacci</a>
  */
-@Extension
-public final class PageDecoratorImpl extends PageDecorator {
-    @Inject
-    private GlobalConfigurationImpl globalConfiguration;
+package org.jenkins.ci.plugins.html5_notifier;
 
-    public GlobalConfigurationImpl getGlobalConfiguration() {
-        return globalConfiguration;
-    }
-}

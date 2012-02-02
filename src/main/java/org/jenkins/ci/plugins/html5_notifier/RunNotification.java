@@ -34,6 +34,9 @@ import java.util.Date;
 import jenkins.model.Jenkins;
 
 /**
+ * Encapsulation for the actual "web page" HTML which the HTML5 notification API
+ * will render, based on a specific {@link hudson.model.Run}.
+ * 
  * @author <a href="mailto:jieryn@gmail.com">Jesse Farinacci</a>
  */
 public final class RunNotification extends RunListener<Run<?, ?>> implements

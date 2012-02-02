@@ -33,6 +33,9 @@ import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.StaplerRequest;
 
 /**
+ * The {@link jenkins.model.GlobalConfiguration} configuration data for this
+ * plugin, {@link javax.inject.Inject}ed into other {@link hudson.Extension}s.
+ * 
  * @author <a href="mailto:jieryn@gmail.com">Jesse Farinacci</a>
  */
 @Extension

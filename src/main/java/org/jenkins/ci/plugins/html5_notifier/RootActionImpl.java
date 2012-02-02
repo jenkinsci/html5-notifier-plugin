@@ -43,6 +43,10 @@ import org.kohsuke.stapler.StaplerRequest;
 import org.kohsuke.stapler.StaplerResponse;
 
 /**
+ * This {@link hudson.model.RootAction} serves as the end-point for the HTML5
+ * notification plugin: querying for new notifications, and then the actual
+ * "web page" which is rendered by a {@link RunNotification}.
+ * 
  * @author <a href="mailto:jieryn@gmail.com">Jesse Farinacci</a>
  */
 @Extension

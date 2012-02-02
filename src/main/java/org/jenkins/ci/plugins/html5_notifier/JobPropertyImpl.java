@@ -36,6 +36,10 @@ import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.StaplerRequest;
 
 /**
+ * A simple {@link hudson.model.JobProperty} which lets the Jenkins
+ * administrator exclude specific {@link hudson.model.Job}s from producing HTML5
+ * notifications.
+ * 
  * @author <a href="mailto:jieryn@gmail.com">Jesse Farinacci</a>
  */
 public final class JobPropertyImpl extends JobProperty<AbstractProject<?, ?>> {

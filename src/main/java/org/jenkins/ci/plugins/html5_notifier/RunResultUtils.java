@@ -28,6 +28,9 @@ import hudson.model.Result;
 import hudson.model.Run;
 
 /**
+ * Utilities for dealing with {@link hudson.model.Run}
+ * {@link hudson.model.Result}s.
+ * 
  * @author <a href="mailto:jieryn@gmail.com">Jesse Farinacci</a>
  */
 public final class RunResultUtils {
