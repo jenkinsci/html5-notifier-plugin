@@ -88,7 +88,7 @@ public final class RootActionImpl implements RootAction {
 
     protected static JSONObject toJSONObject(final RunNotification notification) {
         final JSONObject jsonObject = new JSONObject();
-        jsonObject.put("url", Jenkins.getInstance().getRootUrl()+ URL_NAME + "/query?" + ATTRIBUTE_RUN_ID + "="
+        jsonObject.put("url", Jenkins.getInstance().getRootUrlFromRequest() + URL_NAME + "/query?" + ATTRIBUTE_RUN_ID + "="
                 + notification.getIdx());
         return jsonObject;
     }
