@@ -42,6 +42,8 @@ import org.apache.commons.lang.StringUtils;
 import org.kohsuke.stapler.StaplerRequest;
 import org.kohsuke.stapler.StaplerResponse;
 
+import jenkins.model.Jenkins;
+
 /**
  * This {@link hudson.model.RootAction} serves as the end-point for the HTML5
  * notification plugin: querying for new notifications, and then the actual
