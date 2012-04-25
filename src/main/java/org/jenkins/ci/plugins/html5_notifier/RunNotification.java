@@ -107,7 +107,7 @@ public final class RunNotification extends RunListener<Run<?, ?>> implements
      * interpolator
      */
     public String toHtmlString() {
-        final String rootUrl = Jenkins.getInstance().getRootUrl();
+        final String rootUrl = Jenkins.getInstance().getRootUrlFromRequest();
         final Result result = run.getResult();
         final HealthReport buildHealth = run.getParent().getBuildHealth();
 
