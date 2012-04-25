@@ -55,7 +55,7 @@ public final class RootActionImpl implements RootAction {
 
     protected static final String SESSION_LAST_QUERY = "lastQuery";
 
-    protected static final String URL_NAME           = "/html5-notifier-plugin";
+    protected static final String URL_NAME           = "html5-notifier-plugin";
 
     protected static Date getAndUpdateLastQueryDate(final StaplerRequest request) {
         if (request == null) {
