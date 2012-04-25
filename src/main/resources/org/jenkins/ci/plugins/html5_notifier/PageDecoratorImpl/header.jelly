@@ -29,7 +29,7 @@
     var enabled = ${it.globalConfiguration.enabled}
     var queryTimeout = ${it.globalConfiguration.queryTimeout};
     var notificationTimeout = ${it.globalConfiguration.notificationTimeout};
-    var jenkinsrooturl = ${request.contextPath}
+    var jenkinsrooturl = ${request.contextPath};
   </script>
   <script type="text/javascript" src="${pluginUrl}/js/html5-notifier.js" />
 </j:jelly>
