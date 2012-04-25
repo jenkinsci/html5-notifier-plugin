@@ -55,7 +55,7 @@ public final class RootActionImpl implements RootAction {
 
     protected static final String SESSION_LAST_QUERY = "lastQuery";
 
-    protected static final String URL_NAME           = "html5-notifier-plugin";
+    protected static final String URL_NAME           = "/html5-notifier-plugin";
 
     protected static Date getAndUpdateLastQueryDate(final StaplerRequest request) {
         if (request == null) {
@@ -88,7 +88,7 @@ public final class RootActionImpl implements RootAction {
 
     protected static JSONObject toJSONObject(final RunNotification notification) {
         final JSONObject jsonObject = new JSONObject();
-        jsonObject.put("url", URL_NAME + "/query?" + ATTRIBUTE_RUN_ID + "="
+        jsonObject.put("url", Jenkins.getInstance().getRootUrl()+ URL_NAME + "/query?" + ATTRIBUTE_RUN_ID + "="
                 + notification.getIdx());
         return jsonObject;
     }
