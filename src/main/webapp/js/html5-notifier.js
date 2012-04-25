@@ -46,7 +46,7 @@ function run() {
 	if (enabled) {
 		new PeriodicalExecuter(function(pe) {
 			if (isNotificationsPermitted()) {
-				new Ajax.Request('html5-notifier-plugin/list', {
+				new Ajax.Request(jenkinsrooturl +'/html5-notifier-plugin/list', {
 					onSuccess : function(response) {
 						$H(response.responseJSON).get('new').each(
 								function(item) {
