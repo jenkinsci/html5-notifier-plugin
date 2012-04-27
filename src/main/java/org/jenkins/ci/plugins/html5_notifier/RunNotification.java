@@ -107,7 +107,7 @@ public final class RunNotification extends RunListener<Run<?, ?>> implements
      * interpolator
      */
     public String toHtmlString() {
-        final String rootUrl = Jenkins.getInstance().getRootUrl();
+        final String rootUrl = Jenkins.getInstance().getRootUrlFromRequest();
         final Result result = run.getResult();
         final HealthReport buildHealth = run.getParent().getBuildHealth();
 
@@ -134,7 +134,7 @@ public final class RunNotification extends RunListener<Run<?, ?>> implements
                 .append(result.toString())
                 .append("\" src=\"")
                 // TODO: use user's size prefernce
-                .append("/images/16x16/")
+                .append(rootUrl).append("/images/16x16/")
                 .append(result.color.getImage())
                 .append("\"/>")
 

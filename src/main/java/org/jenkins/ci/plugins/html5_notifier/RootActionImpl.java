@@ -42,6 +42,8 @@ import org.apache.commons.lang.StringUtils;
 import org.kohsuke.stapler.StaplerRequest;
 import org.kohsuke.stapler.StaplerResponse;
 
+import jenkins.model.Jenkins;
+
 /**
  * This {@link hudson.model.RootAction} serves as the end-point for the HTML5
  * notification plugin: querying for new notifications, and then the actual
@@ -88,7 +90,7 @@ public final class RootActionImpl implements RootAction {
 
     protected static JSONObject toJSONObject(final RunNotification notification) {
         final JSONObject jsonObject = new JSONObject();
-        jsonObject.put("url", URL_NAME + "/query?" + ATTRIBUTE_RUN_ID + "="
+        jsonObject.put("url", Jenkins.getInstance().getRootUrlFromRequest() + URL_NAME + "/query?" + ATTRIBUTE_RUN_ID + "="
                 + notification.getIdx());
         return jsonObject;
     }
