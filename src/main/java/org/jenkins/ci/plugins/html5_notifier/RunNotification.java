@@ -32,7 +32,7 @@ import hudson.model.listeners.RunListener;
 import java.util.Date;
 
 import jenkins.model.Jenkins;
-
+import net.sf.json.JSONObject;
 /**
  * Encapsulation for the actual "web page" HTML which the HTML5 notification API
  * will render, based on a specific {@link hudson.model.Run}.
@@ -100,6 +100,20 @@ public final class RunNotification extends RunListener<Run<?, ?>> implements
 
     public boolean isDifferentResult() {
         return differentResult;
+    }
+
+    public JSONObject toJSONObject() {
+        final String rootUrl = Jenkins.getInstance().getRootUrlFromRequest();
+        final Result result = run.getResult();
+        final JSONObject jsonObject = new JSONObject();
+
+        jsonObject.put("project", run.getParent().getName());
+        jsonObject.put("result", run.getResult().toString());
+        jsonObject.put("result_icon", rootUrl + "/images/16x16/" + result.color.getImage());
+        jsonObject.put("url", rootUrl + run.getUrl());
+        jsonObject.put("name", run.getFullDisplayName());
+
+        return jsonObject;
     }
 
     /*

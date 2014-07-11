@@ -82,17 +82,10 @@ public final class RootActionImpl implements RootAction {
 
         for (final RunNotification notification : RunListenerImpl
                 .getAllFutureRunNotifications(date)) {
-            array.add(toJSONObject(notification));
+            array.add(notification.toJSONObject());
         }
 
         return array;
-    }
-
-    protected static JSONObject toJSONObject(final RunNotification notification) {
-        final JSONObject jsonObject = new JSONObject();
-        jsonObject.put("url", Jenkins.getInstance().getRootUrlFromRequest() + URL_NAME + "/query?" + ATTRIBUTE_RUN_ID + "="
-                + notification.getIdx());
-        return jsonObject;
     }
 
     protected static Date validateNotNull(final Date a, final Date b) {

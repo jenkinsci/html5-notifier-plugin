@@ -22,52 +22,66 @@
  * THE SOFTWARE.
  */
 
-function isNotificationsEnabled() {
-	return window.webkitNotifications;
-}
+window.HTML5NotifierPlugin = window.HTML5NotifierPlugin || {};
 
-function isNotificationsPermitted() {
-	return isNotificationsEnabled()
-			&& window.webkitNotifications.checkPermission() == 0;
-}
-
-function setup() {
-	if (enabled) {
-		if (isNotificationsEnabled()) {
-			window.webkitNotifications.requestPermission();
+window.HTML5NotifierPlugin.setup = function() {
+	if (window.HTML5NotifierPlugin.enabled) {
+		if (Notify.isSupported()) {
+      if (Notify.needsPermission()) {
+        var button = new Element("button");
+        button.update("Enable HTML5 Notifications");
+        $('footer').insert("<br/>");
+        $('footer').insert(button);
+        button.observe('click', function() {
+          Notify.requestPermission(function() {
+            button.remove();
+          });
+        });
+      }
+      HTML5NotifierPlugin.run();
 		} else {
-			console
-					.log("Notifications are not supported for this web browser.");
+			console.log("Notifications are not supported for this web browser.");
+      window.HTML5NotifierPlugin.enabled = false;
 		}
 	}
-}
-
-function run() {
-	if (enabled) {
+};
+window.HTML5NotifierPlugin.run = function () {
+	if (window.HTML5NotifierPlugin.enabled) {
 		new PeriodicalExecuter(function(pe) {
-			if (isNotificationsPermitted()) {
-				new Ajax.Request(jenkinsrooturl +'/html5-notifier-plugin/list', {
+			if (Notify.isSupported()) {
+				new Ajax.Request(window.HTML5NotifierPlugin.jenkinsrooturl +'/html5-notifier-plugin/list', {
 					onSuccess : function(response) {
-						$H(response.responseJSON).get('new').each(
-								function(item) {
-									var notification = window.webkitNotifications
-											.createHTMLNotification($H(item)
-													.get('url'));
-									notification.ondisplay = new function() {
-										window.setTimeout(function() {
-											notification.cancel();
-										}, notificationTimeout);
-									}
-									notification.show();
-								});
-					}
-				});
-			}
-		}, queryTimeout);
-	}
-}
+						$H(response.responseJSON).get('new').each(function(item) {
+              var $item = $H(item);
+              /*{
+                name: "test #15",
+                project: "test",
+                result: "SUCCESS",
+                result_icon: "http://url//images/16x16/blue.png",
+                url: "http://url/job/test/15/"
+              }*/
+              var url = $item.get('url');
+              var myNotification = new Notify($item.get('name'), {
+                // icon: window.HTML5NotifierPlugin.resURL + '/images/jenkins.png',
+                icon: $item.get('result_icon'),
+                body: $item.get('result'),
+                timeout: (window.HTML5NotifierPlugin.notificationTimeout/1000),
+                notifyClick: function() {
+                  setTimeout(function() {
+                    window.focus(); 
+                    location.href = url;
+                  },0);
+                }
+              });
 
-setup();
-run();
+              myNotification.show();
+            });
+          }
+        });
+			}
+		}, window.HTML5NotifierPlugin.queryTimeout);
+	}
+};
+document.observe("dom:loaded", window.HTML5NotifierPlugin.setup);
 
 0;
