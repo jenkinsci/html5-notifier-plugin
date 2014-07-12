@@ -28,10 +28,7 @@ window.HTML5NotifierPlugin.setup = function() {
 	if (window.HTML5NotifierPlugin.enabled) {
 		if (Notify.isSupported()) {
       if (Notify.needsPermission()) {
-        var button = new Element("button");
-        button.update("Enable HTML5 Notifications");
-        $('footer').insert("<br/>");
-        $('footer').insert(button);
+        var button = $("btn-html5-notifier-activate").show();
         button.observe('click', function() {
           Notify.requestPermission(function() {
             button.remove();
