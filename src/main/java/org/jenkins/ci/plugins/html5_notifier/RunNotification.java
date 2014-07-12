@@ -24,7 +24,6 @@
 
 package org.jenkins.ci.plugins.html5_notifier;
 
-import hudson.model.HealthReport;
 import hudson.model.Result;
 import hudson.model.Run;
 import hudson.model.listeners.RunListener;
@@ -114,59 +113,5 @@ public final class RunNotification extends RunListener<Run<?, ?>> implements
         jsonObject.put("name", run.getFullDisplayName());
 
         return jsonObject;
-    }
-
-    /*
-     * I wish there was a better way to do this... like, internal jelly
-     * interpolator
-     */
-    public String toHtmlString() {
-        final String rootUrl = Jenkins.getInstance().getRootUrlFromRequest();
-        final Result result = run.getResult();
-        final HealthReport buildHealth = run.getParent().getBuildHealth();
-
-        return new StringBuilder()
-                .append("<html>")
-                .append("<head>")
-                .append("<link rel=\"stylesheet\" type=\"text/css\" href=\"")
-                .append(rootUrl)
-                .append("/plugin/html5-notifier-plugin/css/html5-notifier.css\" />")
-                .append("</head>")
-                .append("<body>")
-                .append("<div class=\"notification\">")
-
-                // the entire "page" is a link to the build result page
-                .append("<a target=\"_blank\" href=\"")
-                .append(rootUrl)
-                .append(run.getUrl())
-                .append("\">")
-
-                // build result ball
-                .append("<img alt=\"")
-                .append(result.toString())
-                .append("\" title=\"")
-                .append(result.toString())
-                .append("\" src=\"")
-                // TODO: use user's size prefernce
-                .append(rootUrl).append("/images/16x16/")
-                .append(result.color.getImage())
-                .append("\"/>")
-
-                // build health
-                .append(" ").append("<img alt=\"")
-                .append(buildHealth.getDescription()).append("\" title=\"")
-                .append(buildHealth.getDescription()).append("\" src=\"")
-                .append(rootUrl).append("/images/16x16/")
-                .append(buildHealth.getIconUrl()).append("\"/>")
-
-                // job name # build number
-                .append(" ").append(run.getFullDisplayName())
-
-                // result status
-                .append(" - ").append(run.getResult())
-
-                // all done
-                .append("</a>").append("</div>").append("</body>")
-                .append("</html>").toString();
     }
 }
