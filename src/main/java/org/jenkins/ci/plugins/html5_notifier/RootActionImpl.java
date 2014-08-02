@@ -29,7 +29,6 @@ import hudson.model.RootAction;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.Writer;
 import java.util.Date;
 
 import javax.servlet.ServletException;
@@ -38,11 +37,8 @@ import javax.servlet.http.HttpSession;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
-import org.apache.commons.lang.StringUtils;
 import org.kohsuke.stapler.StaplerRequest;
 import org.kohsuke.stapler.StaplerResponse;
-
-import jenkins.model.Jenkins;
 
 /**
  * This {@link hudson.model.RootAction} serves as the end-point for the HTML5
@@ -53,11 +49,9 @@ import jenkins.model.Jenkins;
  */
 @Extension
 public final class RootActionImpl implements RootAction {
-    protected static final String ATTRIBUTE_RUN_ID   = "run";
-
     protected static final String SESSION_LAST_QUERY = "lastQuery";
 
-    protected static final String URL_NAME           = "/html5-notifier-plugin";
+    protected static final String URL_NAME           = "html5-notifier-plugin";
 
     protected static Date getAndUpdateLastQueryDate(final StaplerRequest request) {
         if (request == null) {
@@ -82,17 +76,10 @@ public final class RootActionImpl implements RootAction {
 
         for (final RunNotification notification : RunListenerImpl
                 .getAllFutureRunNotifications(date)) {
-            array.add(toJSONObject(notification));
+            array.add(notification.toJSONObject());
         }
 
         return array;
-    }
-
-    protected static JSONObject toJSONObject(final RunNotification notification) {
-        final JSONObject jsonObject = new JSONObject();
-        jsonObject.put("url", Jenkins.getInstance().getRootUrlFromRequest() + URL_NAME + "/query?" + ATTRIBUTE_RUN_ID + "="
-                + notification.getIdx());
-        return jsonObject;
     }
 
     protected static Date validateNotNull(final Date a, final Date b) {
@@ -113,30 +100,9 @@ public final class RootActionImpl implements RootAction {
     }
 
     protected static void writeResponse(final StaplerResponse response,
-            final RunNotification notification) throws ServletException,
-            IOException {
-        if (notification != null) {
-            writeResponse(response, notification.toHtmlString());
-        }
-    }
-
-    protected static void writeResponse(final StaplerResponse response,
             final String string) throws ServletException, IOException {
         if (response != null) {
             writeResponse(response.getWriter(), string);
-        }
-    }
-
-    protected static void writeResponse(final Writer writer, final String string)
-            throws ServletException, IOException {
-        if (writer != null) {
-            if (writer instanceof PrintWriter) {
-                writeResponse((PrintWriter) writer, string);
-            }
-
-            else {
-                writeResponse(new PrintWriter(writer), string);
-            }
         }
     }
 
@@ -149,23 +115,6 @@ public final class RootActionImpl implements RootAction {
                 getHtml5NotifierRunNotificationJSONArray(getAndUpdateLastQueryDate(request)));
         response.setContentType("application/json");
         writeResponse(response, result.toString());
-    }
-
-    public void doQuery(final StaplerRequest request,
-            final StaplerResponse response) throws ServletException,
-            IOException {
-        final String run = request.getParameter(ATTRIBUTE_RUN_ID);
-        if (!StringUtils.isEmpty(run)) {
-            try {
-                writeResponse(response,
-                        RunListenerImpl.getRunNotificationByIdx(Integer
-                                .valueOf(run)));
-            }
-
-            catch (final NumberFormatException nfe) {
-                /* do nothing */
-            }
-        }
     }
 
     public String getDisplayName() {

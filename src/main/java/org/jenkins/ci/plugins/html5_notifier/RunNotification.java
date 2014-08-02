@@ -24,7 +24,6 @@
 
 package org.jenkins.ci.plugins.html5_notifier;
 
-import hudson.model.HealthReport;
 import hudson.model.Result;
 import hudson.model.Run;
 import hudson.model.listeners.RunListener;
@@ -32,7 +31,7 @@ import hudson.model.listeners.RunListener;
 import java.util.Date;
 
 import jenkins.model.Jenkins;
-
+import net.sf.json.JSONObject;
 /**
  * Encapsulation for the actual "web page" HTML which the HTML5 notification API
  * will render, based on a specific {@link hudson.model.Run}.
@@ -102,57 +101,17 @@ public final class RunNotification extends RunListener<Run<?, ?>> implements
         return differentResult;
     }
 
-    /*
-     * I wish there was a better way to do this... like, internal jelly
-     * interpolator
-     */
-    public String toHtmlString() {
+    public JSONObject toJSONObject() {
         final String rootUrl = Jenkins.getInstance().getRootUrlFromRequest();
         final Result result = run.getResult();
-        final HealthReport buildHealth = run.getParent().getBuildHealth();
+        final JSONObject jsonObject = new JSONObject();
 
-        return new StringBuilder()
-                .append("<html>")
-                .append("<head>")
-                .append("<link rel=\"stylesheet\" type=\"text/css\" href=\"")
-                .append(rootUrl)
-                .append("/plugin/html5-notifier-plugin/css/html5-notifier.css\" />")
-                .append("</head>")
-                .append("<body>")
-                .append("<div class=\"notification\">")
+        jsonObject.put("project", run.getParent().getName());
+        jsonObject.put("result", run.getResult().toString());
+        jsonObject.put("result_icon", rootUrl + "/images/16x16/" + result.color.getImage());
+        jsonObject.put("url", rootUrl + run.getUrl());
+        jsonObject.put("name", run.getFullDisplayName());
 
-                // the entire "page" is a link to the build result page
-                .append("<a target=\"_blank\" href=\"")
-                .append(rootUrl)
-                .append(run.getUrl())
-                .append("\">")
-
-                // build result ball
-                .append("<img alt=\"")
-                .append(result.toString())
-                .append("\" title=\"")
-                .append(result.toString())
-                .append("\" src=\"")
-                // TODO: use user's size prefernce
-                .append(rootUrl).append("/images/16x16/")
-                .append(result.color.getImage())
-                .append("\"/>")
-
-                // build health
-                .append(" ").append("<img alt=\"")
-                .append(buildHealth.getDescription()).append("\" title=\"")
-                .append(buildHealth.getDescription()).append("\" src=\"")
-                .append(rootUrl).append("/images/16x16/")
-                .append(buildHealth.getIconUrl()).append("\"/>")
-
-                // job name # build number
-                .append(" ").append(run.getFullDisplayName())
-
-                // result status
-                .append(" - ").append(run.getResult())
-
-                // all done
-                .append("</a>").append("</div>").append("</body>")
-                .append("</html>").toString();
+        return jsonObject;
     }
 }
