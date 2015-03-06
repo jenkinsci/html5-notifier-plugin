@@ -35,7 +35,7 @@
     </parent>
 
     <artifactId>html5-notifier-plugin</artifactId>
-    <version>1.5</version>
+    <version>1.6-SNAPSHOT</version>
     <packaging>hpi</packaging>
 
     <name>HTML5 Notifier Plugin</name>
