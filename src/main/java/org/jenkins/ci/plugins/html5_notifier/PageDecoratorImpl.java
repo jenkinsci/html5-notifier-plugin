@@ -30,7 +30,7 @@ import hudson.model.PageDecorator;
 import javax.inject.Inject;
 
 /**
- * A simple {@hudson.model.PageDecorator} which
+ * A simple {@link hudson.model.PageDecorator} which
  * inserts the appropriate javascript code onto each page.
  * 
  * @author <a href="mailto:jieryn@gmail.com">Jesse Farinacci</a>

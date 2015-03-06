@@ -91,6 +91,10 @@ public final class GlobalConfigurationImpl extends GlobalConfiguration {
 
     /**
      * @since 1.1
+     * @deprecated 1.1
+     * @param enabled {@link enabled}
+     * @param notificationTimeout {@link notificationTimeout}
+     * @param queryTimeout {@link queryTimeout}
      */
     @Deprecated
     public GlobalConfigurationImpl(final boolean enabled,
@@ -101,6 +105,10 @@ public final class GlobalConfigurationImpl extends GlobalConfiguration {
     /**
      * Create a HTML5 web notification {@link PageDecorator} with the specified
      * configuration.
+     * @param enabled {@link enabled}
+     * @param notificationTimeout {@link notificationTimeout}
+     * @param queryTimeout {@link queryTimeout}
+     * @param allResults {@link allResults}
      */
     @DataBoundConstructor
     public GlobalConfigurationImpl(final boolean enabled,
