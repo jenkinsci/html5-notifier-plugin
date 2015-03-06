@@ -40,7 +40,7 @@ import javax.inject.Inject;
 
 /**
  * Conveniently keep track of all {@link Run}s as they complete, as
- * {@link Html5NotifierRunNotification}s, and provide time-based access to them.
+ * {@link RunNotification}s, and provide time-based access to them.
  * 
  * @author <a href="mailto:jieryn@gmail.com">Jesse Farinacci</a>
  */
