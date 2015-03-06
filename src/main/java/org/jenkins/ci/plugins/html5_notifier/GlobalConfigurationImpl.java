@@ -107,11 +107,11 @@ public final class GlobalConfigurationImpl extends GlobalConfiguration {
             final int queryTimeout, final int notificationTimeout,
             final boolean allResults) {
         super();
-        load();
         this.enabled = enabled;
         this.queryTimeout = queryTimeout;
         this.notificationTimeout = notificationTimeout;
         this.allResults = allResults;
+        load();
     }
 
     @Override
