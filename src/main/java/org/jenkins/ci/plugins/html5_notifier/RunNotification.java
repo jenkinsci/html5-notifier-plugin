@@ -108,7 +108,7 @@ public final class RunNotification extends RunListener<Run<?, ?>> implements
 
         jsonObject.put("project", run.getParent().getName());
         jsonObject.put("result", run.getResult().toString());
-        jsonObject.put("result_icon", rootUrl + "/images/16x16/" + result.color.getImage());
+        jsonObject.put("result_icon", rootUrl + "/images/48x48/" + result.color.getImage());
         jsonObject.put("url", rootUrl + run.getUrl());
         jsonObject.put("name", run.getFullDisplayName());
 
