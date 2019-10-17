@@ -18,6 +18,8 @@ Other browsers do not support HTML5 notifications right now. You can check this 
 
 ## Changelog
 
+See [GitHub Releases](https://github.com/jenkinsci/html5-notifier-plugin/releases)
+
 ### 1.5 (released 2015-03-06)
 
 * [JENKINS-27222](https://issues.jenkins-ci.org/browse/JENKINS-27222) - Fixes global configuration not saving/loading.
