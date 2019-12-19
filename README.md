@@ -8,6 +8,10 @@ This plugin is compatible with Google Chrome, Safari, and Firefox
 
 Other browsers do not support HTML5 notifications right now. You can check this website for details : http://caniuse.com/#feat=notifications
 
+## Note
+
+Modern browsers require https to be able to use the notification api, so if your jenkins is using http:// this will not work.
+
 ## Screenshots
 
 | Section       | Screenshot    |
