@@ -1,129 +1,98 @@
 <?xml version="1.0"?>
 
 <!--
-  The MIT License
+The MIT License
 
-  Copyright (c) 2011, Jesse Farinacci
+Copyright (c) 2011, Jesse Farinacci
 
-  Permission is hereby granted, free of charge, to any person obtaining a copy
-  of this software and associated documentation files (the "Software"), to deal
-  in the Software without restriction, including without limitation the rights
-  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-  copies of the Software, and to permit persons to whom the Software is
-  furnished to do so, subject to the following conditions:
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-  The above copyright notice and this permission notice shall be included in
-  all copies or substantial portions of the Software.
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
 
-  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-  THE SOFTWARE.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
 -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-    <modelVersion>4.0.0</modelVersion>
+	<modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>org.jenkins-ci.plugins</groupId>
-        <artifactId>plugin</artifactId>
-        <version>1.455</version>
-    </parent>
+	<parent>
+		<groupId>org.jenkins-ci.plugins</groupId>
+		<artifactId>plugin</artifactId>
+		<version>3.54</version>
+		<relativePath />
+	</parent>
 
-    <artifactId>html5-notifier-plugin</artifactId>
-    <version>1.6-SNAPSHOT</version>
-    <packaging>hpi</packaging>
+	<groupId>org.jenkins-ci.plugins</groupId>
+	<artifactId>html5-notifier-plugin</artifactId>
+	<version>${revision}${changelist}</version>
+	<packaging>hpi</packaging>
 
-    <name>HTML5 Notifier Plugin</name>
-    <description>Provides W3C Web Notifications support for builds.</description>
-    <url>https://github.com/jenkinsci/html5-notifier-plugin</url>
+	<name>HTML5 Notifier Plugin</name>
+	<description>Provides W3C Web Notifications support for builds.</description>
+	<url>https://github.com/jenkinsci/html5-notifier-plugin</url>
+	<licenses>
+		<license>
+			<name>The MIT license</name>
+			<url>https://github.com/jenkinsci/html5-notifier-plugin/raw/master/LICENSE.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    </properties>
-    <licenses>
-        <license>
-            <name>The MIT license</name>
-            <url>https://github.com/jenkinsci/html5-notifier-plugin/raw/master/LICENSE.txt</url>
-            <distribution>repo</distribution>
-        </license>
-    </licenses>
+	<contributors>
+		<contributor>
+			<!-- <id>jieryn</id> -->
+			<name>Jesse Farinacci</name>
+			<email>jieryn@gmail.com</email>
+			<roles>
+				<role>Original Creator</role>
+			</roles>
+		</contributor>
+	</contributors>
+	<developers>
+		<developer>
+			<id>halkeye</id>
+			<name>Gavin Mogan</name>
+			<email>halkeye@gmail.com</email>
+		</developer>
+	</developers>
 
-    <developers>
-        <developer>
-            <id>jieryn</id>
-            <name>Jesse Farinacci</name>
-            <email>jieryn@gmail.com</email>
-        </developer>
-        <developer>
-            <id>halkeye</id>
-            <name>Gavin Mogan</name>
-            <email>halkeye@gmail.com</email>
-        </developer>
-    </developers>
+	<scm>
+		<connection>scm:git:git://github.com/jenkinsci/html5-notifier-plugin.git</connection>
+		<developerConnection>scm:git:git@github.com:jenkinsci/html5-notifier-plugin.git</developerConnection>
+		<url>https://github.com/jenkinsci/html5-notifier-plugin</url>
+	</scm>
 
-    <scm>
-        <connection>scm:git:git://github.com/jenkinsci/html5-notifier-plugin.git</connection>
-        <developerConnection>scm:git:git@github.com:jenkinsci/html5-notifier-plugin.git</developerConnection>
-        <url>https://github.com/jenkinsci/html5-notifier-plugin</url>
-    </scm>
+	<properties>
+		<revision>2.0</revision>
+		<changelist>-SNAPSHOT</changelist>
+		<jenkins.version>2.60</jenkins.version>
+		<java.level>8</java.level>
+	</properties>
 
-    <repositories>
-        <repository>
-            <id>repo.jenkins-ci.org</id>
-            <url>https://repo.jenkins-ci.org/public/</url>
-        </repository>
-    </repositories>
-
-    <pluginRepositories>
-        <pluginRepository>
-            <id>repo.jenkins-ci.org</id>
-            <url>https://repo.jenkins-ci.org/public/</url>
-        </pluginRepository>
-    </pluginRepositories>
-
-    <distributionManagement>
-      <repository>
-        <id>maven.jenkins-ci.org</id>
-        <url>http://maven.jenkins-ci.org:8081/content/repositories/releases/</url>
-      </repository>
-    </distributionManagement>
-
-    <build>
-      <plugins>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-release-plugin</artifactId>
-          <version>2.0</version>
-          <dependencies>
-            <dependency>
-              <groupId>org.apache.maven.scm</groupId>
-              <artifactId>maven-scm-provider-gitexe</artifactId>
-              <version>1.3</version>
-            </dependency>
-          </dependencies>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-compiler-plugin</artifactId>
-          <version>2.0.2</version>
-          <configuration>
-            <source>1.5</source>
-            <target>1.5</target>
-          </configuration>
-        </plugin>
-      </plugins>
-      <extensions>
-        <extension>
-          <groupId>org.jvnet.wagon-svn</groupId>
-          <artifactId>wagon-svn</artifactId>
-          <version>1.9</version>
-        </extension>
-      </extensions>
-      </build>
+	<repositories>
+		<repository>
+			<id>repo.jenkins-ci.org</id>
+			<url>https://repo.jenkins-ci.org/public/</url>
+		</repository>
+	</repositories>
+	
+	<pluginRepositories>
+		<pluginRepository>
+			<id>repo.jenkins-ci.org</id>
+			<url>https://repo.jenkins-ci.org/public/</url>
+		</pluginRepository>
+	</pluginRepositories>
 </project>
