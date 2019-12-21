@@ -78,8 +78,10 @@ THE SOFTWARE.
 	<properties>
 		<revision>2.0</revision>
 		<changelist>-SNAPSHOT</changelist>
-		<jenkins.version>2.60</jenkins.version>
+		<jenkins.version>2.121.1</jenkins.version>
 		<java.level>8</java.level>
+		<npm.version>6.11.2</npm.version>
+		<node.version>12.14.0</node.version>
 	</properties>
 
 	<repositories>
@@ -95,4 +97,12 @@ THE SOFTWARE.
 			<url>https://repo.jenkins-ci.org/public/</url>
 		</pluginRepository>
 	</pluginRepositories>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.jenkins-ci.plugins</groupId>
+			<artifactId>sse-gateway</artifactId>
+			<version>1.20</version>
+		</dependency>
+	</dependencies>
 </project>
