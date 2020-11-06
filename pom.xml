@@ -25,31 +25,55 @@ THE SOFTWARE.
 -->
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-
     <modelVersion>4.0.0</modelVersion>
-
     <parent>
         <groupId>org.jenkins-ci.plugins</groupId>
         <artifactId>plugin</artifactId>
         <version>4.12</version>
         <relativePath />
     </parent>
-
     <groupId>org.jenkins-ci.plugins</groupId>
     <artifactId>html5-notifier-plugin</artifactId>
     <version>${revision}${changelist}</version>
     <packaging>hpi</packaging>
-
+    <properties>
+        <revision>2.0</revision>
+        <changelist>-SNAPSHOT</changelist>
+        <jenkins.version>2.176.4</jenkins.version>
+        <java.level>8</java.level>
+        <npm.version>6.11.2</npm.version>
+        <node.version>12.14.0</node.version>
+    </properties>
     <name>HTML5 Notifier Plugin</name>
     <description>Provides W3C Web Notifications support for builds.</description>
     <url>https://github.com/jenkinsci/html5-notifier-plugin</url>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <!-- Pick up common dependencies for 2.164.x: https://github.com/jenkinsci/bom#usage -->
+                <groupId>io.jenkins.tools.bom</groupId>
+                <artifactId>bom-2.176.x</artifactId>
+                <version>3</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <licenses>
         <license>
             <name>The MIT license</name>
-            <url>https://github.com/jenkinsci/html5-notifier-plugin/raw/master/LICENSE.txt</url>
-            <distribution>repo</distribution>
+            <url>https://opensource.org/licenses/MIT</url>
         </license>
     </licenses>
+
+    <scm>
+        <connection>scm:git:git://github.com/jenkinsci/${project.artifactId}-plugin.git</connection>
+        <developerConnection>scm:git:git@github.com:jenkinsci/${project.artifactId}-plugin.git</developerConnection>
+        <url>https://github.com/jenkinsci/${project.artifactId}-plugin</url>
+        <tag>${scmTag}</tag>
+    </scm>
 
     <contributors>
         <contributor>
@@ -65,24 +89,9 @@ THE SOFTWARE.
         <developer>
             <id>halkeye</id>
             <name>Gavin Mogan</name>
-            <email>halkeye@gmail.com</email>
+            <email>jenkins@gavinmogan.com</email>
         </developer>
     </developers>
-
-    <scm>
-        <connection>scm:git:git://github.com/jenkinsci/html5-notifier-plugin.git</connection>
-        <developerConnection>scm:git:git@github.com:jenkinsci/html5-notifier-plugin.git</developerConnection>
-        <url>https://github.com/jenkinsci/html5-notifier-plugin</url>
-    </scm>
-
-    <properties>
-        <revision>2.0</revision>
-        <changelist>-SNAPSHOT</changelist>
-        <jenkins.version>2.176.4</jenkins.version>
-        <java.level>8</java.level>
-        <npm.version>6.11.2</npm.version>
-        <node.version>12.14.0</node.version>
-    </properties>
 
     <repositories>
         <repository>
@@ -97,19 +106,6 @@ THE SOFTWARE.
             <url>https://repo.jenkins-ci.org/public/</url>
         </pluginRepository>
     </pluginRepositories>
-
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <!-- Pick up common dependencies for 2.164.x: https://github.com/jenkinsci/bom#usage -->
-                <groupId>io.jenkins.tools.bom</groupId>
-                <artifactId>bom-2.176.x</artifactId>
-                <version>3</version>
-                <scope>import</scope>
-                <type>pom</type>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
 
     <dependencies>
         <dependency>
