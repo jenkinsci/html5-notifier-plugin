@@ -25,12 +25,21 @@
 package org.jenkins.ci.plugins.html5_notifier;
 
 import hudson.Extension;
+import hudson.model.Item;
 import hudson.model.PageDecorator;
+import hudson.model.User;
+import hudson.plugins.favorite.Favorites;
 import jenkins.model.GlobalConfiguration;
+import jenkins.model.Jenkins;
 import net.sf.json.JSONObject;
 
-import org.kohsuke.stapler.DataBoundConstructor;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
 import org.kohsuke.stapler.StaplerRequest;
+import org.kohsuke.stapler.DataBoundSetter;
+
+import net.sf.json.JSONSerializer;
 
 /**
  * The {@link jenkins.model.GlobalConfiguration} configuration data for this
@@ -46,9 +55,9 @@ public final class GlobalConfigurationImpl extends GlobalConfiguration {
     protected static final boolean DEFAULT_ENABLED              = true;
 
     /**
-     * The default value for {@link #queryTimeout}, in seconds.
+     * The default value for {@link #enabledFavorites}.
      */
-    protected static final int     DEFAULT_QUERY_TIMEOUT        = 30;
+    protected static final boolean DEFAULT_ENABLED_FAVORITES    = true;
 
     /**
      * The default value for {@link #notificationTimeout}, in milliseconds.
@@ -66,9 +75,9 @@ public final class GlobalConfigurationImpl extends GlobalConfiguration {
     private boolean                enabled;
 
     /**
-     * The default time, in seconds, to wait between polling.
+     * Whether or not to use favorites plugin if installed
      */
-    private int                    queryTimeout;
+    private boolean                enabledFavorites;
 
     /**
      * The default time, in milliseconds, to display a notification.
@@ -85,40 +94,10 @@ public final class GlobalConfigurationImpl extends GlobalConfiguration {
      * Create a default HTML5 web notification {@link PageDecorator}.
      */
     public GlobalConfigurationImpl() {
-        this(DEFAULT_ENABLED, DEFAULT_QUERY_TIMEOUT,
-                DEFAULT_NOTIFICATION_TIMEOUT, DEFAULT_ALL_RESULTS);
-    }
-
-    /**
-     * @since 1.1
-     * @deprecated 1.1
-     * @param enabled {@link enabled}
-     * @param notificationTimeout {@link notificationTimeout}
-     * @param queryTimeout {@link queryTimeout}
-     */
-    @Deprecated
-    public GlobalConfigurationImpl(final boolean enabled,
-            final int queryTimeout, final int notificationTimeout) {
-        this(enabled, queryTimeout, notificationTimeout, DEFAULT_ALL_RESULTS);
-    }
-
-    /**
-     * Create a HTML5 web notification {@link PageDecorator} with the specified
-     * configuration.
-     * @param enabled {@link enabled}
-     * @param notificationTimeout {@link notificationTimeout}
-     * @param queryTimeout {@link queryTimeout}
-     * @param allResults {@link allResults}
-     */
-    @DataBoundConstructor
-    public GlobalConfigurationImpl(final boolean enabled,
-            final int queryTimeout, final int notificationTimeout,
-            final boolean allResults) {
-        super();
-        this.enabled = enabled;
-        this.queryTimeout = queryTimeout;
-        this.notificationTimeout = notificationTimeout;
-        this.allResults = allResults;
+        this.enabled = DEFAULT_ENABLED;
+        this.enabledFavorites = DEFAULT_ENABLED_FAVORITES;
+        this.notificationTimeout = DEFAULT_NOTIFICATION_TIMEOUT;
+        this.allResults = DEFAULT_ALL_RESULTS;
         load();
     }
 
@@ -139,22 +118,25 @@ public final class GlobalConfigurationImpl extends GlobalConfiguration {
         return enabled;
     }
 
+    @DataBoundSetter
     public void setEnabled(final boolean enabled) {
         this.enabled = enabled;
     }
 
-    public int getQueryTimeout() {
-        return queryTimeout;
+    public boolean isEnabledFavorites() {
+        return enabledFavorites;
     }
 
-    public void setQueryTimeout(final int queryTimeout) {
-        this.queryTimeout = queryTimeout;
+    @DataBoundSetter
+    public void setEnabledFavorites(final boolean enabled) {
+        this.enabledFavorites = enabled;
     }
 
     public int getNotificationTimeout() {
         return notificationTimeout;
     }
 
+    @DataBoundSetter
     public void setNotificationTimeout(final int notificationTimeout) {
         this.notificationTimeout = notificationTimeout;
     }
@@ -163,7 +145,35 @@ public final class GlobalConfigurationImpl extends GlobalConfiguration {
         return allResults;
     }
 
+    @DataBoundSetter
     public void setAllResults(final boolean allResults) {
         this.allResults = allResults;
+    }
+
+    public String getJobsForCurrentUser() {
+        if (!this.isEnabledFavorites()) {
+            return "null";
+        }
+        Jenkins instance = Jenkins.getInstanceOrNull();
+        if (instance == null) {
+            // not started up yet, so all jobs
+            return "null";
+        }
+        if (instance.getPlugin("favorite") == null) {
+            // all jobs
+            return "null";
+        }
+        User me = User.current();
+        if (me == null) { 
+            return "null";
+        }
+        Iterable<Item> items = Favorites.getFavorites(me);
+        
+        return JSONSerializer.toJSON(
+            StreamSupport 
+                .stream(items.spliterator(), false)
+                .map(i -> i.getFullName())
+                .collect(Collectors.toList())
+        ).toString();
     }
 }

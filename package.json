@@ -44,7 +44,7 @@
   "dependencies": {
     "@jenkins-cd/js-modules": "0.0.10",
     "@jenkins-cd/logging": "0.0.6",
-    "@jenkins-cd/sse-gateway": "0.0.21",
+    "@jenkins-cd/sse-gateway": "file:jenkins-cd-sse-gateway-0.0.22.tgz",
     "notifyjs": "^3.0.0"
   }
 }

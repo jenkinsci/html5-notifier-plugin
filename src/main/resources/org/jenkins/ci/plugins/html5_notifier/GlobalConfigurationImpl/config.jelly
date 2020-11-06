@@ -28,11 +28,11 @@
     <f:entry title="${%HTML5.Notifier.Plugin.Section.Enabled.Title}" field="enabled">
       <f:checkbox />
     </f:entry>
-    <f:entry title="${%HTML5.Notifier.Plugin.Section.AllResults.Title}" field="allResults">
+    <f:entry title="${%HTML5.Notifier.Plugin.Section.EnabledFavorites.Title}" field="enabledFavorites">
       <f:checkbox />
     </f:entry>
-    <f:entry title="${%HTML5.Notifier.Plugin.Section.QueryTimeout.Title}" field="queryTimeout">
-      <f:textbox />
+    <f:entry title="${%HTML5.Notifier.Plugin.Section.AllResults.Title}" field="allResults">
+      <f:checkbox />
     </f:entry>
     <f:entry title="${%HTML5.Notifier.Plugin.Section.NotificationTimeout.Title}" field="notificationTimeout">
       <f:textbox />

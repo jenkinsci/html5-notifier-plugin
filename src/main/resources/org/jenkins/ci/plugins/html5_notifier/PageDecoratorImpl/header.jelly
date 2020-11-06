@@ -24,13 +24,12 @@
 
 <?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler">
-  <st:adjunct includes="org.jenkinsci.plugins.ssegateway.sse.EventSource" />
   <j:set var="pluginUrl" value="${request.contextPath}/plugin/html5-notifier-plugin"/>
   <script type="text/javascript">
     window.HTML5NotifierPlugin = window.HTML5NotifierPlugin || {};
     window.HTML5NotifierPlugin.enabled = ${it.globalConfiguration.enabled};
-    window.HTML5NotifierPlugin.queryTimeout = ${it.globalConfiguration.queryTimeout};
     window.HTML5NotifierPlugin.notificationTimeout = ${it.globalConfiguration.notificationTimeout};
+    window.HTML5NotifierPlugin.includesJobs = ${it.globalConfiguration.JobsForCurrentUser};
   </script>
   <script type="text/javascript" src="${pluginUrl}/js/html5-notifier.js" />
 </j:jelly>

@@ -36,6 +36,13 @@ const STATUSES = {
 };
 
 class HTML5NotifierPlugin {
+  shouldNotify(jobName) {
+    if (window.HTML5NotifierPlugin.includesJobs === null) {
+      return true; // always notify
+    }
+    return window.HTML5NotifierPlugin.includesJobs.includes(jobName);
+  }
+
   setup() {
     if (!window.HTML5NotifierPlugin.enabled) { return; }
     if (Notify.needsPermission) {
@@ -86,6 +93,9 @@ class HTML5NotifierPlugin {
     connection.subscribe('job', (event) => {
       // if (!Notify.isSupported()) { return; }
       if (event.jenkins_event === 'job_run_ended') {
+        if (!this.shouldNotify(event.job_name)) {
+          return;
+        }
         const url = `${event.jenkins_instance_url}${event.jenkins_object_url}`;
         const myNotification = new Notify(event.job_name, {
           // icon: window.HTML5NotifierPlugin.resURL + '/images/jenkins.png',
