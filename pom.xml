@@ -41,8 +41,8 @@ THE SOFTWARE.
         <changelist>-SNAPSHOT</changelist>
         <jenkins.version>2.176.4</jenkins.version>
         <java.level>8</java.level>
-        <npm.version>6.11.2</npm.version>
-        <node.version>12.14.0</node.version>
+        <npm.version>8.1.2</npm.version>
+        <node.version>16.13.1</node.version>
     </properties>
     <name>HTML5 Notifier Plugin</name>
     <description>Provides W3C Web Notifications support for builds.</description>

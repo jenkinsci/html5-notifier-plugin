@@ -43,7 +43,7 @@
   "dependencies": {
     "@jenkins-cd/js-modules": "0.0.10",
     "@jenkins-cd/logging": "0.0.6",
-    "@jenkins-cd/sse-gateway": "file:jenkins-cd-sse-gateway-0.0.22.tgz",
+    "@jenkins-cd/sse-gateway": "https://github.com/jenkinsci/sse-gateway-plugin/archive/refs/tags/sse-gateway-plugin-1.26.tar.gz",
     "notifyjs": "^3.0.0"
   }
 }
