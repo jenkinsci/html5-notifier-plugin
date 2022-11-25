@@ -1,0 +1,49 @@
+{
+  "name": "html5-notifier-plugin",
+  "version": "1.0.0",
+  "description": "Provides W3C Web Notifications support for builds.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "dev": "parcel watch --public-url ./ ./src/main/resources/org/jenkins/ci/plugins/html5_notifier/*.js -d ./src/main/webapp/js",
+    "mvnbuild": "parcel build --public-url ./ ./src/main/resources/org/jenkins/ci/plugins/html5_notifier/*.js -d ./src/main/webapp/js",
+    "build": "npm run mvnbuild",
+    "lint": "eslint  --ext .js,.jsx --ignore-path .gitignore src",
+    "mvntest": "npm run lint",
+    "test": "npm run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jenkinsci/html5-notifier-plugin.git"
+  },
+  "author": "Gavin Mogan <npm@gavinmogan.com> (https://www.gavinmogan.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jenkinsci/html5-notifier-plugin/issues"
+  },
+  "homepage": "https://github.com/jenkinsci/html5-notifier-plugin#readme",
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-eslint": "^10.1.0",
+    "babel-plugin-syntax-async-functions": "^6.13.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-plugin-transform-regenerator": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "eslint": "^7.12.1",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-plugin-babel": "^5.3.1",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-react": "^7.21.5",
+    "parcel-bundler": "^1.12.4"
+  },
+  "dependencies": {
+    "@jenkins-cd/js-modules": "0.0.10",
+    "@jenkins-cd/logging": "0.0.6",
+    "@jenkins-cd/sse-gateway": "https://github.com/jenkinsci/sse-gateway-plugin/archive/refs/tags/sse-gateway-plugin-1.26.tar.gz",
+    "notifyjs": "^3.0.0"
+  }
+}

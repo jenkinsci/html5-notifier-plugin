@@ -5,3 +5,10 @@ target/
 work/
 .idea/
 .factorypath
+.cache/
+.idea/
+node_modules/
+node/
+npm-debug.log
+src/main/webapp/js/*.js.map
+src/main/webapp/js/*.js
